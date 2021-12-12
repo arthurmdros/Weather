@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Weather</string>
     <string name="get_city_id">Get City ID</string>
-    <string name="weather_by_id">Weather by ID</string>
-    <string name="weather_by_name">Weather by Name</string>
+    <string name="weather_by_id">By ID</string>
+    <string name="weather_by_name">By Name</string>
     <string name="city_name">City Name</string>
 </resources>
