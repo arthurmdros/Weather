@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             wDs.getCityId(this.mViewHolder.etDataInput.getText().toString(), new WeatherDataService.VolleyResponseListener() {
                 @Override
                 public void onError(String message) {
-                    Toast.makeText(MainActivity.this,"Something wrong!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this,"Something wrong! Enter the city name.", Toast.LENGTH_SHORT).show();
                 }
                 @Override
                 public void onResponse(String cityID) {
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             wDs.getCityForescastById(this.mViewHolder.etDataInput.getText().toString(), new WeatherDataService.ForecastByIdResponse() {
                 @Override
                 public void onError(String message) {
-                    Toast.makeText(MainActivity.this,"Something wrong!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this,"Something wrong! Enter the city id.", Toast.LENGTH_SHORT).show();
                 }
                 @Override
                 public void onResponse(List<WeatherReportModel> weatherReportModels) {
@@ -59,7 +59,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             });
         }else if(v.getId() == R.id.btn_getWeatherByCityName){
-            Toast.makeText(this,"You typed " + this.mViewHolder.etDataInput.getText().toString(), Toast.LENGTH_SHORT).show();
+            wDs.getCityForescastByName(this.mViewHolder.etDataInput.getText().toString(), new WeatherDataService.ForecastByNameResponse() {
+                @Override
+                public void onError(String message) {
+                    Toast.makeText(MainActivity.this,"Something wrong! Enter the city name.", Toast.LENGTH_SHORT).show();
+                }
+                @Override
+                public void onResponse(List<WeatherReportModel> weatherReportModels) {
+                    ArrayAdapter arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, weatherReportModels);
+                    mViewHolder.lvWeatherReports.setAdapter(arrayAdapter);
+                }
+            });
         }
     }
 
