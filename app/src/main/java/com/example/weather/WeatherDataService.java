@@ -99,10 +99,34 @@ public class WeatherDataService {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                forecastByIdResponse.onError("Something wrong!");
             }
         });
 
         MySingleton.getInstance(context).addToRequestQueue(request);
+    }
+
+    public interface ForecastByNameResponse{
+        void onError(String message);
+        void onResponse(List<WeatherReportModel> weatherReportModels);
+    }
+
+    public void getCityForescastByName(String cityName, ForecastByNameResponse forecastByNameResponse){
+        getCityId(cityName, new VolleyResponseListener() {
+            @Override
+            public void onError(String message) {}
+            @Override
+            public void onResponse(String cityID) {
+                getCityForescastById(cityID, new ForecastByIdResponse() {
+                    @Override
+                    public void onError(String message) {}
+                    @Override
+                    public void onResponse(List<WeatherReportModel> weatherReportModels) {
+                        forecastByNameResponse.onResponse(weatherReportModels);
+                    }
+                });
+            }
+        });
+
     }
 }
