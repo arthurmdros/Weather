@@ -42,28 +42,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        WeatherDataService wDs = new WeatherDataService(MainActivity.this);
         if(v.getId() == R.id.btn_getCityId){
-            String url ="https://www.metaweather.com/api/location/search/?query="+this.mViewHolder.etDataInput.getText().toString();
-
-            JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
+            wDs.getCityId(this.mViewHolder.etDataInput.getText().toString(), new WeatherDataService.VolleyResponseListener() {
                 @Override
-                public void onResponse(JSONArray response) {
-                    String cityID = "";
-                    try {
-                        JSONObject cityInfo = response.getJSONObject(0);
-                        cityID = cityInfo.getString("woeid");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    Toast.makeText(MainActivity.this,"City id = "+cityID, Toast.LENGTH_SHORT).show();
+                public void onError(String message) {
+                    Toast.makeText(MainActivity.this,"Something wrong!", Toast.LENGTH_SHORT).show();
                 }
-            }, new Response.ErrorListener() {
                 @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(MainActivity.this,"Error occured", Toast.LENGTH_SHORT).show();
+                public void onResponse(String cityID) {
+                    Toast.makeText(MainActivity.this,"Return id: "+cityID, Toast.LENGTH_SHORT).show();
                 }
             });
-            MySingleton.getInstance(MainActivity.this).addToRequestQueue(request);
         }else if(v.getId() == R.id.btn_getWeatherByCityId){
             Toast.makeText(this,"You clicked me 2.", Toast.LENGTH_SHORT).show();
         }else if(v.getId() == R.id.btn_getWeatherByCityName){
