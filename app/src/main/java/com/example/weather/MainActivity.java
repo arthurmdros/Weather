@@ -4,21 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -55,7 +47,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             });
         }else if(v.getId() == R.id.btn_getWeatherByCityId){
-            Toast.makeText(this,"You clicked me 2.", Toast.LENGTH_SHORT).show();
+            wDs.getCityForescastById(this.mViewHolder.etDataInput.getText().toString(), new WeatherDataService.ForecastByIdResponse() {
+                @Override
+                public void onError(String message) {
+                    Toast.makeText(MainActivity.this,"Something wrong!", Toast.LENGTH_SHORT).show();
+                }
+                @Override
+                public void onResponse(List<WeatherReportModel> weatherReportModels) {
+                    ArrayAdapter arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_1, weatherReportModels);
+                    mViewHolder.lvWeatherReports.setAdapter(arrayAdapter);
+                }
+            });
         }else if(v.getId() == R.id.btn_getWeatherByCityName){
             Toast.makeText(this,"You typed " + this.mViewHolder.etDataInput.getText().toString(), Toast.LENGTH_SHORT).show();
         }
