@@ -9,18 +9,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     private ViewHolder mViewHolder = new ViewHolder();
 
@@ -34,7 +23,23 @@ public class MainActivity extends AppCompatActivity{
         this.mViewHolder.btnWeatherByName = findViewById(R.id.btn_getWeatherByCityName);
         this.mViewHolder.etDataInput = findViewById(R.id.et_dataInput);
         this.mViewHolder.lvWeatherReports = findViewById(R.id.lv_weatherReports);
+
+        this.mViewHolder.btnGetCity.setOnClickListener(this);
+        this.mViewHolder.btnWeatherByID.setOnClickListener(this);
+        this.mViewHolder.btnWeatherByName.setOnClickListener(this);
     }
+
+    @Override
+    public void onClick(View v) {
+        if(v.getId() == R.id.btn_getCityId){
+            Toast.makeText(this,"You clicked me 1.", Toast.LENGTH_SHORT).show();
+        }else if(v.getId() == R.id.btn_getWeatherByCityId){
+            Toast.makeText(this,"You clicked me 2.", Toast.LENGTH_SHORT).show();
+        }else if(v.getId() == R.id.btn_getWeatherByCityName){
+            Toast.makeText(this,"You typed " + this.mViewHolder.etDataInput.getText().toString(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     private class ViewHolder{
         Button btnGetCity;
