@@ -43,8 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.btn_getCityId){
-            RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-            String url ="https://www.metaweather.com/api/location/search/?query=salvador";
+            String url ="https://www.metaweather.com/api/location/search/?query="+this.mViewHolder.etDataInput.getText().toString();
 
             JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>() {
                 @Override
@@ -64,8 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Toast.makeText(MainActivity.this,"Error occured", Toast.LENGTH_SHORT).show();
                 }
             });
-
-            queue.add(request);
+            MySingleton.getInstance(MainActivity.this).addToRequestQueue(request);
         }else if(v.getId() == R.id.btn_getWeatherByCityId){
             Toast.makeText(this,"You clicked me 2.", Toast.LENGTH_SHORT).show();
         }else if(v.getId() == R.id.btn_getWeatherByCityName){
