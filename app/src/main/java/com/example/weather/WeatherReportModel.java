@@ -40,10 +40,10 @@ public class WeatherReportModel {
 
     @Override
     public String toString() {
-        return  weather_state_name + "Data: " + applicable_date +
-                "Lo =" + min_temp +
-                "Hi =" + max_temp +
-                "Temp =" + the_temp;
+        return  weather_state_name + "\tData: " + applicable_date +
+                "\nLo = " + min_temp +
+                "\nHi = " + max_temp +
+                "\nTemp = " + the_temp;
     }
 
     public int getId() {
